@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FEFFFE;
+  --foreground: #171717;
+  --card: #E0E0E0;
+  --button: #546454;
+  --hover: #748B75;
+  --alert: #da0000;
+  --success: #4CAF50;
+  --border: #171717;
+  --shadow: #525252;  
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --card: #141414;
+    --button: #748B75;
+    --hover: #546454;
+    --alert: #da0000;
+    --success: #4CAF50;
+    --border: #E0E0E0;
+    --shadow: #949494;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Tahoma, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background: var(--button);
+  color: white;
+  border-radius: 0.78rem;
+  padding: 0.5rem 1rem;
+}
+
+button:hover {
+  background: var(--hover);
+}
+
+
+.card {
+  background: var(--card);
+  border-color: var(--border);
+  border-radius: 0.78rem;
+  padding: 1rem;
+}
+
+h1 {
+  font-size: 2rem !important;
+  font-weight: bold;
+}
+h2 {
+  font-size: 1.5rem !important;
+  font-weight: bold;
+}
+h3 {
+  font-size: 1.25rem !important;
+  font-weight: bold;
+  
+}
