@@ -8,4 +8,19 @@ const publicSupabaseClient = createClient(
   publicSupabaseKey
 );
 
-export default publicSupabaseClient;
+export async function signUpNewUser(
+  email,
+  password,
+  pageUrl
+) {
+  const { data, error } =
+    await publicSupabaseClient.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        emailRedirectTo: pageUrl,
+      },
+    });
+
+  return { data, error };
+}

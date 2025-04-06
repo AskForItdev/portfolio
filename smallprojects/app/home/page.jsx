@@ -30,14 +30,15 @@ export default function Home() {
           would potentially benifit from. This means that i
           did not limit myself to my understanding of
           programming and i could get a sense that i was
-          making somethign actually useful
+          making something actually useful
         </p>
         <p className="mb-4 text-lg">
-          So i asked people that knew nothing about
-          programming, what they want to see for a web-page
-          without them considering my skill-level or what i
-          would potentially benifit from. This means that
-          what i had to do was to figure out
+          Lorem ipsum dolor sit amet consectetur adipisicing
+          elit. Esse animi, accusamus tenetur porro libero
+          enim maxime minus aliquid. Repellat eveniet est
+          deserunt illum officiis! Enim quae blanditiis
+          tenetur velit, sequi voluptatibus optio, vel iusto
+          hic porro, asperiores commodi id facilis.
         </p>
       </div>
     </div>

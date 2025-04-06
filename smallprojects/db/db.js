@@ -5,5 +5,3 @@ const supabaseClient = createClient(
   supabaseUrl,
   supabaseKey
 );
-
-export default supabaseClient;
