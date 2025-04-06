@@ -56,10 +56,7 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button
-          type="submit"
-          className="bg-green-600 text-white p-2 rounded"
-        >
+        <button type="submit" className="">
           Create account
         </button>
         {message && (
