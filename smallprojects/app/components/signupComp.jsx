@@ -1,47 +1,38 @@
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+'use client';
+
 import { useState } from 'react';
 
-import { signInWithEmail } from '@/db/publicDb';
+import { signUpNewUser } from '@/db/publicDb';
 
-import { useUserContext } from '../context/userContext';
-
-export default function Login() {
-  const router = useRouter();
-  const { setUserData } = useUserContext();
+export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // ⛔ prevent form from reloading page
 
-    const { data, error } = await signInWithEmail(
+    const redirectTo = `${window.location.origin}/validated`; // ✅ after email confirm
+
+    const { data, error } = await signUpNewUser(
       email,
-      password
+      password,
+      redirectTo
     );
 
     if (error) {
-      console.error('Error signing in:', error.message);
+      console.error('Error signing up:', error.message);
       setMessage(error.message);
       return;
     }
-    console.log('User signed in:', data);
-    setMessage('Login successful!');
-    setUserData((prev) => ({
-      ...prev,
-      personalData: {
-        ...prev.personalData,
-        userId: data.user.id,
-        name: data.user?.name || 'Secret user?',
-      },
-    }));
-    router.push('/');
-  }
+
+    console.log('User signed up:', data);
+    setMessage('Check your email to confirm your account!');
+  };
 
   return (
     <div>
-      <h2 className="text-xl mb-4">Login page</h2>
+      <h2 className="text-xl mb-4">Signup page</h2>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-2 max-w-sm"
@@ -63,9 +54,8 @@ export default function Login() {
           required
         />
         <button type="submit" className="">
-          Login
+          Create account
         </button>
-        <Link href="./signup">Sign up</Link>
         {message && (
           <p className="text-sm mt-2">{message}</p>
         )}

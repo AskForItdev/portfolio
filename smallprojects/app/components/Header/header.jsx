@@ -1,13 +1,53 @@
 'use client';
+
+// app/components/Header/header.jsx
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCallback, useEffect } from 'react';
+
+import { getUserData } from '@/db/publicDb';
 
 import { useDataContext } from '../../context/dataContext';
 import { useUserContext } from '../../context/userContext';
 
 export default function Header() {
-  const { userData } = useUserContext();
+  const { setUserData, userData, checkSession } =
+    useUserContext();
   const { headerLinks } = useDataContext();
+
+  const fetchUserData = useCallback(async () => {
+    if (!userData.authData.userId) return;
+
+    const result = await getUserData(
+      userData.authData.userId
+    );
+    if (!result || !result.profile_image) {
+      console.error(
+        'No profile_image found for user',
+        userData.authData.userId
+      );
+      return;
+    }
+
+    setUserData((prev) => ({
+      ...prev,
+      authData: {
+        ...prev.authData,
+        image: result?.profile_image,
+      },
+    }));
+  }, [userData.authData.userId, setUserData]);
+
+  useEffect(() => {
+    const runCheck = async () => {
+      await checkSession();
+    };
+    runCheck();
+  }, [checkSession]);
+
+  useEffect(() => {
+    fetchUserData();
+  }, [userData.authData.userId, fetchUserData]);
 
   return (
     <div className="flex flex-col">
@@ -35,13 +75,16 @@ export default function Header() {
           href="/profile"
           className="absolute top-2 right-2"
         >
-          <Image
-            className="w-[80px] h-[80px] shadow-lg relative overflow-hidden object-cover rounded-lg"
-            src="/images/BK fan-art.webp"
-            alt={userData.personalData.image}
-            width={100}
-            height={100}
-          />
+          {userData.authData.image !== '' && (
+            <Image
+              className="w-[80px] h-[80px] shadow-lg relative overflow-hidden object-cover rounded-lg"
+              src={`${userData?.authData.image || '/images/default/secret_user_f.png'}`}
+              alt="User Image"
+              width={100}
+              height={100}
+            />
+          )}
+          {userData.name}
         </Link>
       </div>
     </div>

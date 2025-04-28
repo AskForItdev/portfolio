@@ -1,26 +1,32 @@
 'use client';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-import Header from '../components/Header/header';
+import { signOut } from '@/db/publicDb';
+
 import { useUserContext } from '../context/userContext';
-
 export default function ProfilePage() {
   const { userData } = useUserContext();
-
+  const router = useRouter();
   return (
     <div>
-      <Header />
       <div className="flex flex-col items-center w-full">
-        <h2>{userData.personalData.name}</h2>
+        <h2>{userData.authData.name}</h2>
         <Image
           className="w-[80px] h-[80px] relative overflow-hidden object-cover rounded-lg"
-          src={userData.personalData.image}
+          src={userData.authData.image || '/images/2.png'}
           alt="User Image"
           height={100}
           width={100}
         ></Image>
-        <p>Welcome2 {userData.personalData.name}!</p>
+        <p>Welcome {userData.authData.name}!</p>
         <p>Your level: {userData.pageData.Level}</p>
+        <button
+          className="mt-10"
+          onClick={() => signOut().then(router.push('/'))}
+        >
+          Sign out
+        </button>
       </div>
     </div>
   );

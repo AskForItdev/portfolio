@@ -3,7 +3,6 @@ import { useRef, useState } from 'react';
 
 import LoadButton from '../components/Buttons/LoadButton';
 import ProjectCard from '../components/Cards/ProjectCard';
-import Header from '../components/Header/header';
 import { useDataContext } from '../context/dataContext';
 
 export default function ElementTester() {
@@ -30,7 +29,6 @@ export default function ElementTester() {
   };
   return (
     <div>
-      <Header />
       <h2>On this page i just test some components</h2>
       <div className="component-container mt-20 flex flex-col items-center w-full">
         <h3>

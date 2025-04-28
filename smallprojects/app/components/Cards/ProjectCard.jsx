@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 export default function ProjectCard({
@@ -22,12 +23,12 @@ export default function ProjectCard({
       />
       <p className="mb-4">{description}</p>{' '}
       {link ? (
-        <a
+        <Link
           href={link}
           className="text-blue-500 hover:underline"
         >
           View project
-        </a>
+        </Link>
       ) : (
         <p>Coming soon</p>
       )}
