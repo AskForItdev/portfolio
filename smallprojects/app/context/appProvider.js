@@ -1,12 +1,21 @@
 'use client';
-// /app/context/appprovider.js
 import { DataContextProvider } from './dataContext';
+import { UserThemeProvider } from './themeContext';
 import { UserContextProvider } from './userContext';
+
+// Lägg till dessa rader:
+export { useDataContext } from './dataContext';
+export { useThemeContext } from './themeContext';
+export { useUserContext } from './userContext';
 
 export default function AppProvider({ children }) {
   return (
-    <DataContextProvider>
-      <UserContextProvider>{children}</UserContextProvider>
-    </DataContextProvider>
+    <UserThemeProvider>
+      <DataContextProvider>
+        <UserContextProvider>
+          {children}
+        </UserContextProvider>
+      </DataContextProvider>
+    </UserThemeProvider>
   );
 }

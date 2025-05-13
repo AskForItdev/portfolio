@@ -10,23 +10,24 @@ export default function Start() {
   const router = useRouter();
   const [sessionChecked, setSessionChecked] =
     useState(false);
+
   useEffect(() => {
     const runCheck = async () => {
       await checkSession();
       setSessionChecked(true);
     };
     runCheck();
-  }, []);
+  }, [checkSession]);
 
   useEffect(() => {
     if (!sessionChecked) return;
 
-    if (userData.personalData?.userId) {
+    if (userData.authData?.id) {
       router.push('/home');
     } else {
       router.push('/login');
     }
-  }, [sessionChecked, userData, router]);
+  }, [sessionChecked, userData.authData?.id, router]);
 
   return <div>Validating session</div>;
 }

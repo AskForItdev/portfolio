@@ -1,42 +1,22 @@
 'use client';
 
 // app/components/Header/header.jsx
+import { setCookie } from 'cookies-next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect } from 'react';
 
-import { getUserData } from '@/db/publicDb';
-
-import { useDataContext } from '../../context/dataContext';
-import { useUserContext } from '../../context/userContext';
+import Loader from '@/app/components/Loader';
+import {
+  useDataContext,
+  useUserContext,
+} from '@/app/context/appProvider';
+import { createUserData, getUserData } from '@/db/publicDb';
 
 export default function Header() {
   const { setUserData, userData, checkSession } =
     useUserContext();
   const { headerLinks } = useDataContext();
-
-  const fetchUserData = useCallback(async () => {
-    if (!userData.authData.userId) return;
-
-    const result = await getUserData(
-      userData.authData.userId
-    );
-    if (!result || !result.profile_image) {
-      console.error(
-        'No profile_image found for user',
-        userData.authData.userId
-      );
-      return;
-    }
-
-    setUserData((prev) => ({
-      ...prev,
-      authData: {
-        ...prev.authData,
-        image: result?.profile_image,
-      },
-    }));
-  }, [userData.authData.userId, setUserData]);
 
   useEffect(() => {
     const runCheck = async () => {
@@ -45,9 +25,67 @@ export default function Header() {
     runCheck();
   }, [checkSession]);
 
+  const fetchUserData = useCallback(async () => {
+    if (!userData.authData.id) return;
+
+    const { data, error } = await getUserData(
+      userData.authData.id
+    );
+
+    if (error) {
+      console.log(error);
+      if (error?.code === 'PGRST116') {
+        const { data: createData, error: createError } =
+          await createUserData(userData.authData.id);
+        if (createError) {
+          console.log(
+            'Failed to create user row',
+            createError
+          );
+          return;
+        }
+        if (createData) {
+          setUserData((prev) => ({
+            ...prev,
+            authData: {
+              ...prev.authData,
+              image: createData?.profile_image,
+            },
+          }));
+          userCookie(createData);
+        }
+      }
+    }
+    if (!data) {
+      console.log('Failed to fetch user data');
+      return;
+    }
+    console.log('User data from database:', data);
+    if (data) {
+      setUserData((prev) => ({
+        ...prev,
+        authData: {
+          ...prev.authData,
+          image: data?.profile_image,
+          name: data?.user_name,
+        },
+      }));
+      userCookie(data);
+    }
+
+    console.log('userData set: ', userData);
+  }, [userData.authData.id, setUserData]);
+
+  function userCookie(data) {
+    setCookie('userData', JSON.stringify(data), {
+      maxAge: 60 * 60 * 6, // t.ex. 6 timmar
+      // path: '/',
+    });
+  }
+
   useEffect(() => {
     fetchUserData();
-  }, [userData.authData.userId, fetchUserData]);
+  }, [userData.authData.id, fetchUserData]);
 
   return (
     <div className="flex flex-col">
@@ -75,15 +113,19 @@ export default function Header() {
           href="/profile"
           className="absolute top-2 right-2"
         >
-          {userData.authData.image !== '' && (
-            <Image
-              className="w-[80px] h-[80px] shadow-lg relative overflow-hidden object-cover rounded-lg"
-              src={`${userData?.authData.image || '/images/default/secret_user_f.png'}`}
-              alt="User Image"
-              width={100}
-              height={100}
-            />
-          )}
+          <div className="imageContainer w-[80px] h-[80px] shadow-lg relative overflow-hidden object-cover rounded-lg">
+            {userData?.authData.image ? (
+              <Image
+                className=""
+                src={userData.authData.image}
+                alt="User Image"
+                width={100}
+                height={100}
+              />
+            ) : (
+              <Loader />
+            )}
+          </div>
           {userData.name}
         </Link>
       </div>

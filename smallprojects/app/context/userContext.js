@@ -13,36 +13,34 @@ export const UserContextProvider = ({ children }) => {
 
   const [userData, setUserData] = useState({
     authData: {
-      image: '/images/default/secret_user_f.png',
+      // id: null,
+      // email: null,
+      // image: null,
+      // name: null,
     },
-    pageData: {},
-    socials: {},
+    // pageData: {},
+    // socials: {},
   });
 
   const checkSession = useCallback(async () => {
     const session = await getUserSession();
-    console.log('Session result:', session); // ⬅ log immediately
-
+    console.log('Session result:', session);
     if (!session) {
-      console.warn('No session, redirecting...');
-      setTimeout(() => router.push('/login'), 100);
+      router.push('/login');
       return;
     }
-
-    console.log('✅ Session found:', session);
-
-    setUserData((prev) => ({
-      ...prev,
-      authData: {
-        ...prev.authData,
-        userId: session.user.id,
-        name:
-          session.user.user_metadata?.name ||
-          'Secret user? -.-',
-        email: session.user.email,
-      },
-    }));
-  }, [setUserData, router]);
+    if (session) {
+      setUserData((prev) => ({
+        ...prev,
+        authData: {
+          ...prev.authData,
+          id: session.user.id,
+          email: session.user.email,
+          name: session.user.user_metadata?.name,
+        },
+      }));
+    }
+  }, [router]);
 
   return (
     <UserContext.Provider

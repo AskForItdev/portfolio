@@ -56,12 +56,43 @@ export async function signInWithEmail(email, password) {
 export async function getUserData(userId) {
   const { data, error } = await publicSupabaseClient
     .from('users')
-    .select('profile_image')
+    .select('*')
     .eq('id', userId)
     .single();
 
-  if (error) {
-    console.error('Error getting user data:', error);
+  return { data, error };
+}
+
+export async function createUserData(userId) {
+  const { data, error } = await publicSupabaseClient
+    .from('users')
+    .insert({ id: userId })
+    .select('*')
+    .single();
+
+  const { data: statsData, error: statsError } =
+    await publicSupabaseClient
+      .from('userStats')
+      .insert({ id: userId, user_level: 0 })
+      .select('user_level')
+      .single();
+  console.log('User stats set:', statsData);
+
+  if (statsError) {
+    console.error('Error creating user stats:', statsError);
   }
-  return data;
+  if (error) {
+    console.error('Error creating user data:', error);
+  }
+
+  return { data, error };
+}
+
+export async function getUserStats(userId) {
+  const { data, error } = await publicSupabaseClient
+    .from('userStats')
+    .select('user_level')
+    .eq('user_id', userId)
+    .single();
+  return { data, error };
 }

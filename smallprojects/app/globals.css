@@ -28,6 +28,35 @@
   }
 }
 
+#smaskaligt {
+  --background: #A5C1A5;
+  --background2: #D7A5B0;
+  --foreground: #ffffff;
+  --card: #FFE9A7;
+  --button: #B6D7C5;
+  --hover: #63ce93;
+  --alert: #FF4500;
+  --success: #32CD32;
+  --border: #2A2A2A;
+  --shadow: #777777;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  #smaskaligt {
+    --background: #A5C1A5;
+    --background2: #D7A5B0;
+    --foreground: #ffffff;
+    --card: #FFE9A7;
+    --button: #B6D7C5;
+    --hover: #63ce93;
+    --alert: #FF4500;
+    --success: #32CD32;
+    --border: #2A2A2A;
+    --shadow: #777777;
+  }
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

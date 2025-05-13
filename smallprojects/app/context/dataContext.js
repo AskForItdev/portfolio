@@ -31,10 +31,10 @@ export const DataContextProvider = ({ children }) => {
       link: 'projects/homefinance',
     },
     {
-      title: 'Fifth Project',
-      img: '/images/squirrelsmall.jpg',
-      description: 'This is fifth project.',
-      link: '',
+      title: 'Småskaligt',
+      img: '/images/logos/småskaligt.png',
+      description: 'Project for a creator-databank!',
+      link: 'projects/smaskaligt',
     },
   ];
 
