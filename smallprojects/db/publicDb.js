@@ -57,7 +57,7 @@ export async function getUserData(userId) {
   const { data, error } = await publicSupabaseClient
     .from('users')
     .select('*')
-    .eq('id', userId)
+    .eq('user_id', userId)
     .single();
 
   return { data, error };
@@ -66,21 +66,10 @@ export async function getUserData(userId) {
 export async function createUserData(userId) {
   const { data, error } = await publicSupabaseClient
     .from('users')
-    .insert({ id: userId })
+    .insert({ user_id: userId })
     .select('*')
     .single();
 
-  const { data: statsData, error: statsError } =
-    await publicSupabaseClient
-      .from('userStats')
-      .insert({ id: userId, user_level: 0 })
-      .select('user_level')
-      .single();
-  console.log('User stats set:', statsData);
-
-  if (statsError) {
-    console.error('Error creating user stats:', statsError);
-  }
   if (error) {
     console.error('Error creating user data:', error);
   }
@@ -88,9 +77,17 @@ export async function createUserData(userId) {
   return { data, error };
 }
 
+export async function createUserStats(userId) {
+  return await publicSupabaseClient
+    .from('user_stats')
+    .insert({ user_id: userId, user_level: 0 })
+    .select('user_level')
+    .single();
+}
+
 export async function getUserStats(userId) {
   const { data, error } = await publicSupabaseClient
-    .from('userStats')
+    .from('user_stats')
     .select('user_level')
     .eq('user_id', userId)
     .single();

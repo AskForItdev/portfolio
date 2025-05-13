@@ -7,13 +7,15 @@ import { useCallback } from 'react';
 
 import Loader from '@/app/components/Loader';
 import { getUserStats } from '@/db/publicDb';
-import { signOut } from '@/db/publicDb';
+import { createUserStats, signOut } from '@/db/publicDb';
 
 import { useUserContext } from '../context/userContext';
 
 export default function ProfilePage() {
-  const { userData, checkSession } = useUserContext();
+  const { userData, setUserData, checkSession } =
+    useUserContext();
   const router = useRouter();
+
   useEffect(() => {
     const runCheck = async () => {
       await checkSession();
@@ -28,12 +30,40 @@ export default function ProfilePage() {
     );
     if (error) {
       console.log('Failed to fetch user stats', error);
+      if (error?.code === 'PGRST116') {
+        const { data: createData, error: createError } =
+          await createUserStats(userData.authData.id);
+        if (createError) {
+          console.log(
+            'Failed to create user_stats row',
+            createError
+          );
+          return;
+        }
+        if (createData) {
+          console.log('User stats recieved:', createData);
+          setUserData((prev) => ({
+            ...prev,
+            userStats: {
+              ...prev.userStats,
+              level: createData?.user_level,
+            },
+          }));
+          // userCookie(createData);
+        }
+      }
       return;
     }
     if (data) {
-      console.log('User stats:', data);
+      setUserData((prev) => ({
+        ...prev,
+        userStats: {
+          ...prev.userStats,
+          level: data?.user_level,
+        },
+      }));
     }
-  }, [userData.authData.id]);
+  }, [userData.authData.id, setUserData]);
 
   useEffect(() => {
     fetchUserStats(userData.authData.id);
@@ -43,10 +73,9 @@ export default function ProfilePage() {
     <div>
       <div className="flex flex-col items-center w-full">
         <h2>{userData.authData.name}</h2>
-        <div className="imageContainer w-[80px] h-[80px] shadow-lg relative overflow-hidden object-cover rounded-lg">
+        <div className="imageContainer mt-4 w-[80px] h-[80px] shadow-lg relative overflow-hidden object-cover rounded-lg">
           {userData?.authData.image ? (
             <Image
-              className=""
               src={userData.authData.image}
               alt="User Image"
               width={100}
@@ -56,8 +85,8 @@ export default function ProfilePage() {
             <Loader />
           )}
         </div>
-        {/* <p>Welcome {userData.authData.name}!</p>
-        <p>Your level: {userData.pageData.Level}</p> */}
+        {/* <p>Welcome {userData.authData.name}!</p> */}
+        <p>Your level: {userData.userStats.level}</p>
         <button
           className="mt-10"
           onClick={() => signOut().then(router.push('/'))}

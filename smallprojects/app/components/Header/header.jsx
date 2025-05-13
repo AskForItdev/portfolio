@@ -4,7 +4,7 @@
 import { setCookie } from 'cookies-next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Loader from '@/app/components/Loader';
 import {
@@ -17,13 +17,19 @@ export default function Header() {
   const { setUserData, userData, checkSession } =
     useUserContext();
   const { headerLinks } = useDataContext();
+  const [sessionChecked, setSessionChecked] =
+    useState(false);
 
   useEffect(() => {
-    const runCheck = async () => {
+    (async () => {
       await checkSession();
-    };
-    runCheck();
+      setSessionChecked(true);
+    })();
   }, [checkSession]);
+
+  useEffect(() => {
+    console.log('sessionChecked:', sessionChecked.current);
+  }, [sessionChecked]);
 
   const fetchUserData = useCallback(async () => {
     if (!userData.authData.id) return;
@@ -84,8 +90,10 @@ export default function Header() {
   }
 
   useEffect(() => {
+    if (!sessionChecked) return;
+
     fetchUserData();
-  }, [userData.authData.id, fetchUserData]);
+  }, [sessionChecked, fetchUserData]);
 
   return (
     <div className="flex flex-col">

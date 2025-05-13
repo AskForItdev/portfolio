@@ -2,9 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { useUserContext } from '@/app/context/appProvider';
 import { signInWithEmail } from '@/db/publicDb';
-
-import { useUserContext } from '../context/userContext';
 
 export default function Login() {
   const router = useRouter();
@@ -30,10 +29,11 @@ export default function Login() {
     setMessage('Login successful!');
     setUserData((prev) => ({
       ...prev,
-      personalData: {
-        ...prev.personalData,
-        userId: data.user.id,
-        name: data.user?.name || 'Secret user?',
+      authData: {
+        ...prev.authData,
+        id: data.user.user_id,
+        email: data.user.email,
+        name: data.user.user_metadata.name,
       },
     }));
     router.push('/');
