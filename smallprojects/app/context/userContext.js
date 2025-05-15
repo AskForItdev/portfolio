@@ -2,9 +2,9 @@
 // /app/context/usercontext.js
 import { useRouter } from 'next/navigation';
 import { createContext, useContext, useState } from 'react';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
-import { getUserData, getUserSession } from '@/db/publicDb';
+import { getUserSession } from '@/db/publicDb';
 
 const UserContext = createContext();
 
@@ -26,26 +26,25 @@ export const UserContextProvider = ({ children }) => {
     const session = await getUserSession();
     console.log('Session result:', session);
     if (!session) {
-      return router.push('/login');
+      router.push('/login');
+      return;
     }
-    const { data, error } = await getUserData(
-      session.user.id
-    );
-    if (error) {
-      // Inget DB-rad → skicka tillbaks till login
-      return router.push('/login');
+    if (session) {
+      setUserData((prev) => ({
+        ...prev,
+        authData: {
+          ...prev.authData,
+          id: session.user.id,
+          email: session.user.email,
+          name: session.user.user_metadata?.name,
+        },
+      }));
     }
-    // Allt OK → spara i context
-    setUserData((prev) => ({
-      ...prev,
-      authData: {
-        id: session.user.id,
-        email: session.user.email,
-        name: data.user_name,
-        image: data.profile_image,
-      },
-    }));
   }, [router]);
+
+  useEffect(() => {
+    checkSession();
+  }, [checkSession]);
 
   return (
     <UserContext.Provider

@@ -114,7 +114,7 @@ export default function Header() {
             </Link>
           </li>
         ))}
-        <li className="border text-center w-24 rounded-b-md p-2 hidden sm:block shadow-md"></li>
+        <li className="border text-center w-28 rounded-b-md p-2 hidden sm:block shadow-md"></li>
       </ul>
       <div>
         <Link
