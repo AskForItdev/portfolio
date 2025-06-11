@@ -9,6 +9,8 @@ const publicSupabaseClient = createClient(
   publicSupabaseKey
 );
 
+export default publicSupabaseClient;
+
 export async function signUpNewUser(
   email,
   password,
@@ -91,5 +93,31 @@ export async function getUserStats(userId) {
     .select('user_level')
     .eq('user_id', userId)
     .single();
+  return { data, error };
+}
+
+export async function getFilterOptions(table) {
+  const ALLOWED = [
+    'smsk_categories',
+    'smsk_styles',
+    'smsk_materials',
+    'smsk_features',
+  ];
+  if (!ALLOWED.includes(table)) {
+    throw new Error(`Ogiltig dropdown-tabell: ${table}`);
+  }
+
+  const { data, error } = await publicSupabaseClient
+    .from(table)
+    .select('*');
+
+  if (error) {
+    console.error(
+      `Error fetching dropdown for ${table}:`,
+      error
+    );
+    return { data: null, error };
+  }
+
   return { data, error };
 }

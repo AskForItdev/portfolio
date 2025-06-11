@@ -12,6 +12,8 @@ export const UserThemeProvider = ({ children }) => {
   const [userLanguage, setUserLanguage] = useState({
     language: 'sv',
   });
+  const [hideHeader, setHideHeader] = useState(false);
+  const [headerType, setHeaderType] = useState('hide');
   //   TODO: Set default theme and language from cookies
   return (
     <ThemeContext.Provider
@@ -20,6 +22,10 @@ export const UserThemeProvider = ({ children }) => {
         setUserLanguage,
         userTheme,
         setUserTheme,
+        hideHeader,
+        setHideHeader,
+        headerType,
+        setHeaderType,
       }}
     >
       {children}

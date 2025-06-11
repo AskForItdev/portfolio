@@ -5,6 +5,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 
+import Button from '@/app/components/Button';
 import Loader from '@/app/components/Loader';
 import { getUserStats } from '@/db/publicDb';
 import { createUserStats, signOut } from '@/db/publicDb';
@@ -49,7 +50,6 @@ export default function ProfilePage() {
               level: createData?.user_level,
             },
           }));
-          // userCookie(createData);
         }
       }
       return;
@@ -66,8 +66,21 @@ export default function ProfilePage() {
   }, [userData.authData.id, setUserData]);
 
   useEffect(() => {
-    fetchUserStats(userData.authData.id);
+    if (userData.authData.id) {
+      fetchUserStats();
+    }
   }, [userData.authData.id, fetchUserStats]);
+
+  const handleSignOut = async () => {
+    // Clear user data first
+    setUserData({
+      authData: {},
+      userStats: {},
+    });
+    // Then sign out and redirect
+    await signOut();
+    router.push('/');
+  };
 
   return (
     <div>
@@ -87,12 +100,9 @@ export default function ProfilePage() {
         </div>
         {/* <p>Welcome {userData.authData.name}!</p> */}
         <p>Your level: {userData.userStats.level}</p>
-        <button
-          className="mt-10"
-          onClick={() => signOut().then(router.push('/'))}
-        >
+        <Button className="mt-10" onClick={handleSignOut}>
           Sign out
-        </button>
+        </Button>
       </div>
     </div>
   );

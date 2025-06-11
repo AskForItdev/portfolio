@@ -20,8 +20,6 @@ export default function Start() {
   }, [checkSession]);
 
   useEffect(() => {
-    // if (!sessionChecked) return;
-
     if (userData.authData?.id) {
       router.push('/home');
     } else {

@@ -33,7 +33,7 @@ export const DataContextProvider = ({ children }) => {
     },
     {
       title: 'Småskaligt',
-      img: '/images/logos/småskaligt.png',
+      img: '/images/skaperian/småskaligt.png',
       description: 'Project for a creator-databank!',
       link: 'projects/smaskaligt',
     },
