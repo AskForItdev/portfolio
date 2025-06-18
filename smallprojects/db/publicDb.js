@@ -60,9 +60,18 @@ export async function getUserData(userId) {
     .from('users')
     .select('*')
     .eq('user_id', userId)
-    .single();
-
-  return { data, error };
+    .maybeSingle();
+  if (error) return { data: null, error };
+  if (!data) {
+    const { data: newData, error: newError } =
+      await publicSupabaseClient
+        .from('users')
+        .insert({ user_id: userId })
+        .select('*')
+        .single();
+    return { data: newData, error: newError };
+  }
+  return { data, error: null };
 }
 
 export async function createUserData(userId) {

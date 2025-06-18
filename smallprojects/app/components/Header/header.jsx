@@ -28,6 +28,7 @@ export default function Header() {
     (async () => {
       await checkSession();
       setSessionChecked(true);
+      console.log('Session checked 👌');
     })();
   }, [checkSession]);
 
@@ -63,7 +64,7 @@ export default function Header() {
       }
     }
     if (!data) {
-      console.log('Failed to fetch user data');
+      console.log('Failed to fetch user data', data);
       return;
     }
     console.log('User data from database:', data);

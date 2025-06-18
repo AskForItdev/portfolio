@@ -117,7 +117,7 @@ export default function Smaskaligt() {
                   {mockCategories.map((category, index) => (
                     <li
                       key={index}
-                      className="w-fit xl:w-full mx-[0.1rem] bg-[var(--button)] rounded-full text-center text-sm font-semibold py-1 px-2 hover:bg-gray-200 cursor-pointer"
+                      className="w-fit xl:w-full mx-[0.1rem] bg-[var(--background2)] rounded-full text-center text-sm font-semibold py-1 px-2 hover:bg-gray-200 cursor-pointer"
                       onClick={() => {
                         console.log(
                           `Selected category: ${category}`

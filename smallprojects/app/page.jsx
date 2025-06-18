@@ -21,8 +21,14 @@ export default function Start() {
 
   useEffect(() => {
     if (userData.authData?.id) {
+      console.log(
+        'User session found, redirecting to home -->'
+      );
       router.push('/home');
     } else {
+      console.log(
+        'No user session found, redirecting to login -->'
+      );
       router.push('/login');
     }
   }, [sessionChecked, userData.authData?.id, router]);
