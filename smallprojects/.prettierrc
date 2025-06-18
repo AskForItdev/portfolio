@@ -6,5 +6,6 @@
   "jsxSingleQuote": false,
   "bracketSameLine": false,
   "printWidth": 60,
-  "proseWrap": "preserve"
+  "proseWrap": "preserve",
+  "endOfLine": "auto"
 }

@@ -1,5 +1,6 @@
 'use client';
-import Header from '../components/Header/header';
+// app/home/page.jsx
+
 import { useUserContext } from '../context/userContext';
 
 export default function Home() {
@@ -7,11 +8,9 @@ export default function Home() {
 
   return (
     <div>
-      <Header />
       <div className="flex flex-col px-6 sm:px-20 items-center w-full">
         <h2 className="text-2xl mt-8 mb-4">
-          Welcome to my show-page,{' '}
-          {userData.personalData.name}.
+          Welcome to my show-page, {userData.authData.name}.
         </h2>
 
         <p className="mb-4 text-lg">

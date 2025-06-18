@@ -1,40 +1,46 @@
-'use client';
-
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { signUpNewUser } from '@/db/publicDb';
-
-import { useUserContext } from '../context/userContext';
+import { useUserContext } from '@/app/context/appProvider';
+import { signInWithEmail } from '@/db/publicDb';
 
 export default function Login() {
+  const router = useRouter();
   const { setUserData } = useUserContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // ⛔ prevent form from reloading page
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-    const redirectTo = `${window.location.origin}/home`; // ✅ after email confirm
-
-    const { data, error } = await signUpNewUser(
+    const { data, error } = await signInWithEmail(
       email,
-      password,
-      redirectTo
+      password
     );
 
     if (error) {
-      console.error('Error signing up:', error.message);
+      console.error('Error signing in:', error.message);
       setMessage(error.message);
       return;
     }
-
-    console.log('User signed up:', data);
-    setMessage('Check your email to confirm your account!');
-  };
+    console.log('User signed in:', data);
+    setMessage('Login successful!');
+    setUserData((prev) => ({
+      ...prev,
+      authData: {
+        ...prev.authData,
+        id: data.user.user_id,
+        email: data.user.email,
+        name: data.user.user_metadata.name,
+      },
+    }));
+    router.push('/');
+  }
 
   return (
-    <div>
+    <div className="w-80">
       <h2 className="text-xl mb-4">Login page</h2>
       <form
         onSubmit={handleSubmit}
@@ -56,9 +62,15 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="">
-          Create account
+        <button type="submit" className="button">
+          Login
         </button>
+        <Link
+          href="./signup"
+          className="mt-8 inline-flex items-center justify-center border border-black rounded-full bg-slate-200 text-center hover:bg-slate-300 transition-colors"
+        >
+          No account yet? Sign up ⇒{' '}
+        </Link>
         {message && (
           <p className="text-sm mt-2">{message}</p>
         )}

@@ -19,9 +19,10 @@ export const DataContextProvider = ({ children }) => {
       link: 'projects/realnetworth',
     },
     {
-      title: 'Third Project',
+      title: 'Sälja ved',
       img: '/images/planet.png',
-      description: 'This is third project.',
+      description:
+        'Detta projektet skall se ut som en tjänst för skogsägare att sälja överkott av ved. Tanken är att användare ska kunna lista olika kategoriera och volymer.',
       link: 'projects/timer',
     },
     {
@@ -31,10 +32,10 @@ export const DataContextProvider = ({ children }) => {
       link: 'projects/homefinance',
     },
     {
-      title: 'Fifth Project',
-      img: '/images/squirrelsmall.jpg',
-      description: 'This is fifth project.',
-      link: '',
+      title: 'Småskaligt',
+      img: '/images/skaperian/småskaligt.png',
+      description: 'Project for a creator-databank!',
+      link: 'projects/smaskaligt',
     },
   ];
 

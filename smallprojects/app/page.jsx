@@ -1,26 +1,37 @@
 'use client';
-// app/page.js
-
+// app/page.jsx
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-// eslint-disable-next-line no-unused-vars
-import Header from './components/Header/header';
-import { useUserContext } from './context/userContext';
+import { useUserContext } from '@/app/context/userContext';
 
 export default function Start() {
-  const { userData } = useUserContext();
-  const id = userData?.personalData?.userId;
+  const { checkSession, userData } = useUserContext();
   const router = useRouter();
+  const [sessionChecked, setSessionChecked] =
+    useState(false);
 
   useEffect(() => {
-    if (!id) {
+    const runCheck = async () => {
+      await checkSession();
+      setSessionChecked(true);
+    };
+    runCheck();
+  }, [checkSession]);
+
+  useEffect(() => {
+    if (userData.authData?.id) {
+      console.log(
+        'User session found, redirecting to home -->'
+      );
+      router.push('/home');
+    } else {
+      console.log(
+        'No user session found, redirecting to login -->'
+      );
       router.push('/login');
     }
-    if (id) {
-      router.push('/home');
-    }
-  }, [id, router]);
+  }, [sessionChecked, userData.authData?.id, router]);
 
-  return <div>Validating login</div>;
+  return <div>Validating session</div>;
 }

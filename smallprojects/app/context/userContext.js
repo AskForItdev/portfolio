@@ -1,36 +1,51 @@
 'use client';
 // /app/context/usercontext.js
 import { createContext, useContext, useState } from 'react';
+import { useCallback, useEffect } from 'react';
+
+import { getUserSession } from '@/db/publicDb';
 
 const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState({
-    personalData: {
-      userId: 1,
-      name: 'John Doe',
-      email: 'example@email.com',
-      socials: {
-        github: 'https://github.com',
-        linkedin: 'https://linkedin.com',
-        twitter: 'https://twitter.com',
-      },
-      password: 'password',
-      role: 'user',
-      image: '/images/BK fan-art.webp',
-    },
-    pageData: {
-      Timer: 0,
-      Score: 0,
-      Level: 1,
-    },
+    authData: {},
+    userStats: {},
   });
+
+  const checkSession = useCallback(async () => {
+    try {
+      const session = await getUserSession();
+      if (session) {
+        setUserData((prev) => ({
+          ...prev,
+          authData: {
+            ...prev.authData,
+            id: session.user.id,
+            email: session.user.email,
+            name: session.user.user_metadata?.name,
+          },
+        }));
+      }
+    } catch (error) {
+      console.error('Error checking session:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkSession();
+  }, [checkSession]);
 
   return (
     <UserContext.Provider
       value={{
         userData,
         setUserData,
+        checkSession,
+        isLoading,
       }}
     >
       {children}
