@@ -12,7 +12,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // ⛔ prevent form from reloading page
 
-    const redirectTo = `${process.env.SIGNUP_REDIRECT_URL}validated`; // ✅ after email confirm
+    const redirectTo = `${process.env.NEXT_PUBLIC_SIGNUP_REDIRECT_URL}validated`; // ✅ after email confirm
 
     const { data, error } = await signUpNewUser(
       email,
