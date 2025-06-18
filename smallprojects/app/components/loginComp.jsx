@@ -40,7 +40,7 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <div className="w-80">
       <h2 className="text-xl mb-4">Login page</h2>
       <form
         onSubmit={handleSubmit}
@@ -62,10 +62,15 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="">
+        <button type="submit" className="button">
           Login
         </button>
-        <Link href="./signup">Sign up</Link>
+        <Link
+          href="./signup"
+          className="mt-8 inline-flex items-center justify-center border border-black rounded-full bg-slate-200 text-center hover:bg-slate-300 transition-colors"
+        >
+          No account yet? Sign up ⇒{' '}
+        </Link>
         {message && (
           <p className="text-sm mt-2">{message}</p>
         )}

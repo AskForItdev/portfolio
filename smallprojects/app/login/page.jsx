@@ -17,7 +17,7 @@ export default function LoginPage() {
   }, [checkSession]);
 
   return (
-    <div>
+    <div className="flex flex-col items-center h-screen bg-gray-100">
       <Login />
     </div>
   );

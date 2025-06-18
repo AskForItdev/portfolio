@@ -31,7 +31,7 @@ export default function Signup() {
   };
 
   return (
-    <div>
+    <div className="w-80">
       <h2 className="text-xl mb-4">Signup page</h2>
       <form
         onSubmit={handleSubmit}
@@ -53,7 +53,7 @@ export default function Signup() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="">
+        <button type="submit" className="button">
           Create account
         </button>
         {message && (

@@ -5,7 +5,7 @@ import Signup from '../components/signupComp';
 
 export default function SignupPage() {
   return (
-    <div>
+    <div className="flex flex-col items-center h-screen bg-gray-100">
       <Signup />
     </div>
   );
