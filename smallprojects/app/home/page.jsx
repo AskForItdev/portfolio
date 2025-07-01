@@ -4,7 +4,11 @@
 import { useUserContext } from '../context/userContext';
 
 export default function Home() {
-  const { userData } = useUserContext();
+  const { userData, isLoading } = useUserContext();
+
+  if (isLoading) {
+    return <div>Test</div>;
+  }
 
   return (
     <div>

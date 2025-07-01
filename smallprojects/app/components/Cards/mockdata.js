@@ -1,24 +1,58 @@
 export const mockCategories = [
-  'Keramik',
-  'Kläder',
-  'Smycken',
-  'Accessoarer',
-  'Servering/dukning',
-  'Originalkonst',
-  'Textilt',
-  'Kort/klistermärken',
-  'Posters',
-  'Barn & Baby',
-  'Belysning',
+  { id: 1, name: 'Keramik' },
+  { id: 2, name: 'Kläder' },
+  { id: 3, name: 'Smycken' },
+  { id: 4, name: 'Accessoarer' },
+  { id: 5, name: 'Servering/dukning' },
+  { id: 6, name: 'Originalkonst' },
+  { id: 7, name: 'Textilt' },
+  { id: 8, name: 'Kort/klistermärken' },
+  { id: 9, name: 'Posters' },
+  { id: 10, name: 'Barn & Baby' },
+  { id: 11, name: 'Belysning' },
+];
+
+export const realCreator = [
+  {
+    user_id: '6f1c0af5-f78f-4642-a0e1-687c08d99df9',
+    created_at: '2025-06-18T12:38:51.573704+00:00',
+    first_name: 'FörstaNamn',
+    last_name: 'AndraNamn',
+    role: 'test1',
+    company_name: 'Test1',
+    city: 'Test1',
+    smsk_creator_categories: [
+      {
+        category_id: 1,
+        smsk_categories: {
+          name: 'Keramik',
+        },
+      },
+    ],
+    smsk_creator_styles: [],
+    smsk_creator_materials: [
+      {
+        material_id: 12,
+      },
+    ],
+    smsk_creator_features: [],
+    imageUrls: [
+      '/images/skaperian/bowls.jpg',
+      '/images/skaperian/bowls2.jpg',
+      '/images/skaperian/bowls.jpg',
+      '/images/skaperian/bowls2.jpg',
+    ],
+  },
 ];
 
 export const mockCreators = [
   {
     id: '1',
     displayName: 'Kreativa Krukan',
-    fullName: 'Emma Björkman',
+    first_name: 'Emma',
+    last_name: 'Johansson',
     city: 'Lund',
-    mainCategory: 'Keramik',
+    mainCategory: ['Keramik'],
     subcategories: ['Drejning', 'Väggdekorationer'],
     styles: ['Rustik', 'Organisk'],
     features: [
@@ -40,7 +74,7 @@ export const mockCreators = [
     displayName: 'Silversmeden',
     fullName: 'Marcus Eklund',
     city: 'Västerås',
-    mainCategory: 'Smycken',
+    mainCategory: ['Smycken'],
     subcategories: ['Silver', 'Guld', 'Emalj'],
     styles: ['Modern', 'Elegant'],
     features: [
@@ -60,7 +94,7 @@ export const mockCreators = [
     displayName: 'Tårtstudion',
     fullName: 'Sara Nyström',
     city: 'Karlstad',
-    mainCategory: 'Bakverk',
+    mainCategory: ['Bakverk'],
     subcategories: ['Tårtor', 'Cupcakes'],
     styles: ['Söt', 'Romantisk'],
     features: [
@@ -80,7 +114,7 @@ export const mockCreators = [
     displayName: 'Glasglädje',
     fullName: 'Oskar Lindgren',
     city: 'Örebro',
-    mainCategory: 'Glaskonst',
+    mainCategory: ['Glaskonst'],
     subcategories: ['Fusing', 'Blåst glas'],
     styles: ['Futuristisk', 'Färgglad'],
     features: [
@@ -100,7 +134,7 @@ export const mockCreators = [
     displayName: 'Textilverk',
     fullName: 'Jenny Olsson',
     city: 'Norrköping',
-    mainCategory: 'Textil',
+    mainCategory: ['Textil'],
     subcategories: ['Tryck', 'Vävning'],
     styles: ['Naturnära', 'Geometrisk'],
     features: [
@@ -120,7 +154,7 @@ export const mockCreators = [
     displayName: 'Lera & Liv',
     fullName: 'Henrik Sandström',
     city: 'Helsingborg',
-    mainCategory: 'Keramik',
+    mainCategory: ['Keramik'],
     subcategories: ['Skulptur', 'Drejning'],
     styles: ['Rå', 'Experimentell'],
     features: [
@@ -140,7 +174,7 @@ export const mockCreators = [
     displayName: 'Metallform',
     fullName: 'Isabelle Karlsson',
     city: 'Sundsvall',
-    mainCategory: 'Metall',
+    mainCategory: ['Metall'],
     subcategories: ['Skulptur', 'Bruksföremål'],
     styles: ['Industriell', 'Minimalistisk'],
     features: [
@@ -160,7 +194,7 @@ export const mockCreators = [
     displayName: 'Målarboden',
     fullName: 'Karin Wallin',
     city: 'Kalmar',
-    mainCategory: 'Måleri',
+    mainCategory: ['Måleri'],
     subcategories: ['Akryl', 'Akvarell'],
     styles: ['Abstrakt', 'Stämningsfull'],
     features: [
@@ -180,7 +214,7 @@ export const mockCreators = [
     displayName: 'Form & Färg',
     fullName: 'Daniel Pettersson',
     city: 'Malmö',
-    mainCategory: 'Illustration',
+    mainCategory: ['Illustration'],
     subcategories: ['Digitalt', 'Blyerts'],
     styles: ['Lekfull', 'Serieinspirerad'],
     features: [
@@ -200,7 +234,7 @@ export const mockCreators = [
     displayName: 'Träverkstan',
     fullName: 'Moa Håkansson',
     city: 'Visby',
-    mainCategory: 'Trä',
+    mainCategory: ['Trä'],
     subcategories: ['Snickeri', 'Träsnideri'],
     styles: ['Traditionell', 'Robust'],
     features: [

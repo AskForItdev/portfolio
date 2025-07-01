@@ -13,16 +13,8 @@ import { createUserStats, signOut } from '@/db/publicDb';
 import { useUserContext } from '../context/userContext';
 
 export default function ProfilePage() {
-  const { userData, setUserData, checkSession } =
-    useUserContext();
+  const { userData, setUserData } = useUserContext();
   const router = useRouter();
-
-  useEffect(() => {
-    const runCheck = async () => {
-      await checkSession();
-    };
-    runCheck();
-  }, [checkSession]);
 
   const fetchUserStats = useCallback(async () => {
     if (!userData.authData.id) return;

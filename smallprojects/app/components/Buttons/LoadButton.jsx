@@ -1,17 +1,17 @@
-import React from 'react';
-
 export default function LoadButton({
   onClick,
   text,
   loading,
+  loadingText,
 }) {
   return (
     <div>
       <button
         onClick={onClick}
-        className="hover:scale-105 transition-transform w-24"
+        data-loading={loading}
+        className="hover:scale-105 transition-transform w-auto button"
       >
-        {loading ? 'Loading...' : text}
+        {loading ? loadingText : text}
       </button>
     </div>
   );
