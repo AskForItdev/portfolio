@@ -46,6 +46,7 @@ export const UserContextProvider = ({ children }) => {
         setUserData,
         checkSession,
         isLoading,
+        setIsLoading,
       }}
     >
       {children}

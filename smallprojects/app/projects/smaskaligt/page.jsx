@@ -3,12 +3,12 @@ import Image from 'next/image';
 import { React, useEffect, useState } from 'react';
 
 import CreatorCard from '@/app/components/Cards/CreatorCard';
-import {
-  mockCategories,
-  mockCreators,
-} from '@/app/components/Cards/mockdata';
+import { mockCategories } from '@/app/components/Cards/mockdata';
 // import publicSupabaseClient from '@/db/publicDb';
-import { getFilterOptions } from '@/db/publicDb';
+import {
+  getCreators,
+  getFilterOptions,
+} from '@/db/publicDb';
 export default function Smaskaligt() {
   const [dropDownCategory, setDropDownCategory] = useState(
     []
@@ -17,7 +17,48 @@ export default function Smaskaligt() {
   const [dropDownMaterials, setDropDownMaterial] = useState(
     []
   );
+  const [filteredCreators, setFilteredCreators] = useState(
+    []
+  );
   const [checksFeatures, setChecksFeatures] = useState([]);
+  const [searchFilters, setSearchFilters] = useState({
+    category: null,
+    styles: null,
+    material: null,
+    features: null,
+  });
+
+  useEffect(() => {
+    // Log the current search filters whenever they change
+    console.log('Current search filters:', searchFilters);
+  }, [searchFilters]);
+
+  useEffect(() => {
+    async function fetchCreators() {
+      const { data, error } =
+        await getCreators(searchFilters);
+
+      if (error) {
+        console.log('Error fetching creators😲:', error);
+        return;
+      }
+      console.log('Fetched creators:', data);
+      setFilteredCreators(data);
+    }
+    if (searchFilters.category === null) {
+      return;
+    }
+    fetchCreators();
+  }, [searchFilters]);
+
+  useEffect(() => {
+    console.log(
+      'Filtered creators updated:',
+      filteredCreators
+    );
+    setFilteredCreators(filteredCreators);
+  }, [filteredCreators]);
+
   // MARK: Categories
   useEffect(() => {
     async function getFiltersCat() {
@@ -119,12 +160,16 @@ export default function Smaskaligt() {
                       key={index}
                       className="w-fit xl:w-full mx-[0.1rem] bg-[var(--background2)] rounded-full text-center text-sm font-semibold py-1 px-2 hover:bg-gray-200 cursor-pointer"
                       onClick={() => {
+                        setSearchFilters((prev) => ({
+                          ...prev,
+                          category: category.id,
+                        }));
                         console.log(
-                          `Selected category: ${category}`
+                          `Selected category: ${category.id}`
                         );
                       }}
                     >
-                      {category}
+                      {category.name}
                     </li>
                   ))}
                 </ul>
@@ -135,20 +180,29 @@ export default function Smaskaligt() {
             <div className="overflow-y-auto flex justify-center bg-[var(--background2)] h-max w-full">
               <div className="flex gap-6 justify-evenly m-6 pt-2 h-auto w-[80rem]">
                 <div className="flex-1 px-2">
-                  <div className="creatorCardContainer flex flex-wrap gap-[.75rem]">
-                    {mockCreators.map((creator, index) => (
-                      <CreatorCard
-                        key={index}
-                        name={creator.displayName}
-                        fullName={creator.fullName}
-                        city={creator.city}
-                        mainCategory={creator.mainCategory}
-                        imageUrls={creator.imageUrls}
-                        styles={creator.styles.join(', ')}
-                        features={creator.features}
-                      />
-                    ))}
-                  </div>
+                  {searchFilters.category && (
+                    <div className="creatorCardContainer flex flex-wrap gap-[.75rem]">
+                      {filteredCreators.map(
+                        (creator, index) => (
+                          <CreatorCard
+                            key={index}
+                            name={creator.displayName}
+                            firstName={creator.firstName}
+                            lastName={creator.lastName}
+                            city={creator.city}
+                            mainCategory={
+                              creator.mainCategory
+                            }
+                            imageUrls={creator.imageUrls}
+                            styles={creator.styles.join(
+                              ', '
+                            )}
+                            features={creator.features}
+                          />
+                        )
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="p-2 w-full rounded-2xl flex flex-col basis-[23%] bg-[var(--card)]">
                   <div className="p-4 flex flex-col gap-4 text-sm">
