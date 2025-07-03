@@ -24,22 +24,22 @@ Context API – Global state (Theme, User, Data)
 📁 Relevant projektstruktur
 
 app/
-├── api/                    # Backend endpoints (t.ex. auth, data)
-├── components/             # Återanvändbara UI-komponenter
-│   ├── Buttons/            # Laddnings- och klickknappar
-│   ├── Cards/              # CreatorCard, ProjectCard + mockdata
-│   ├── AuthWrapper.jsx     # Begränsar tillgången till sidan
-│   ├── header.jsx          # Header med navbar som är både statisk och dynamisk visad på sidan.
-│   └── ...                 # Övriga planerade förslag som jag fått (Timer, Networth)
-├── context/                # Theme, User och Data context providers
-├── home/                   # Startsida (`/`)
-├── login/                  # Login-sida
-├── profile/                # Användarprofil
-├── projects/               # Vart jag visar mina små projekt
-│   ├── dennisidea/         # Skall eventuellt vara någon casino inspirerad sida
-│   ├── homefinance/        # Är beställt av min sambo för hemma-ekonomi.
-│   ├── realnetworth/       # Tänkt att vara en mer sofistikerad finansportfölj-tracker.
-│   ├── smaskaligt/         # Kreatörsfilter som jag bygger för Småskaligt. (tar i princip all tid just nu)
-│   └── timer/              # Enkel timer-komponent, är tanken.
-└── layout.jsx              # Global layout & providers
+├── api/                   # Backend endpoints (t.ex. auth, data)
+├── components/            # Återanvändbara UI-komponenter
+│   ├── Buttons/           # Laddnings- och klickknappar
+│   ├── Cards/             # CreatorCard, ProjectCard + mockdata
+│   ├── AuthWrapper.jsx    # Begränsar tillgången till sidan
+│   ├── header.jsx         # Header med navbar som är både statisk och dynamisk visad på sidan.
+│   └── ...                # Övriga planerade förslag som jag fått (Timer, Networth)
+├── context/               # Theme, User och Data context providers
+├── home/                  # Startsida (/)
+├── login/                 # Login-sida
+├── profile/               # Användarprofil
+├── projects/              # Vart jag visar mina små projekt
+│   ├── dennisidea/        # Skall eventuellt vara någon casino inspirerad sida
+│   ├── homefinance/       # Är beställt av min sambo för hemma-ekonomi.
+│   ├── realnetworth/      # Tänkt att vara en mer sofistikerad finansportfölj-tracker.
+│   ├── smaskaligt/        # Kreatörsfilter som jag bygger för Småskaligt. (tar i princip all tid just nu)
+│   └── timer/             # Enkel timer-komponent, är tanken.
+└── layout.jsx             # Global layout & providers
 
