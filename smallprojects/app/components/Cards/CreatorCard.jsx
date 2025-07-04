@@ -4,14 +4,24 @@ import { React, useEffect, useRef } from 'react';
 import ClickIcons from '../clickIcons';
 export default function CreatorCard({
   name,
-  fullName,
+  firstName,
+  lastName,
   city,
   mainCategory,
   styles,
-  imageUrls,
+  imageUrls = [],
   features,
+  materials,
 }) {
   const scrollRef = useRef(null);
+
+  useEffect(() => {
+    console.log(
+      'Materials set in creatorCard:',
+
+      materials
+    );
+  }, [materials]);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -83,7 +93,10 @@ export default function CreatorCard({
             className="flex flex-col gap-2 w-[50%]"
           >
             <div>
-              <p className="text-sm">{fullName}</p>
+              <div className="flex gap-1">
+                <p className="text-sm">{firstName}</p>
+                <p className="text-sm">{lastName}</p>
+              </div>
               <p className="text-sm">{city}</p>
               <p className="text-sm">{mainCategory}</p>
             </div>

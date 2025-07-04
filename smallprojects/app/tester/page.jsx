@@ -4,29 +4,34 @@ import { useRef, useState } from 'react';
 import LoadButton from '../components/Buttons/LoadButton';
 import ProjectCard from '../components/Cards/ProjectCard';
 import { useDataContext } from '../context/dataContext';
+// import { useUserContext } from '../context/userContext';
 
 export default function ElementTester() {
+  const [buttonLoading, setbuttonLoading] = useState(null);
   const { projectData } = useDataContext();
-  const [loading, setLoading] = useState(false);
   const timeoutRef = useRef(null);
+  // const [timeDisplay, setTimeDisplay] = useState(5);
+  const [loadingText, setLoadingText] = useState('');
 
-  const handleClick = () => {
+  const TestClick = () => {
     console.log('Button clicked!');
     startLoading();
   };
 
   const startLoading = () => {
     console.log('Loading started!');
-    if (loading) {
+    if (buttonLoading) {
       clearTimeout(timeoutRef.current);
-      setLoading(false);
+      setbuttonLoading(false);
+      setLoadingText('Loading...');
     } else {
-      setLoading(true);
+      setbuttonLoading(true);
       timeoutRef.current = setTimeout(() => {
-        setLoading(false);
+        setbuttonLoading(false);
       }, 5000);
     }
   };
+
   return (
     <div>
       <h2>On this page i just test some components</h2>
@@ -37,9 +42,11 @@ export default function ElementTester() {
         </h3>
         <div className="load-button-container border-2 border-border rounded-lg p-4 m-2">
           <LoadButton
+            onClick={TestClick}
+            className="button"
             text="test"
-            onClick={handleClick}
-            loading={loading}
+            loading={buttonLoading}
+            loadingText={loadingText}
           />
         </div>
         <h3 className="mt-10 text-center">

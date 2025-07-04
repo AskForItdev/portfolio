@@ -9,6 +9,8 @@ const publicSupabaseClient = createClient(
   publicSupabaseKey
 );
 
+import flattebedCreatiorData from '@/app/projects/smaskaligt/functions';
+
 export default publicSupabaseClient;
 
 export async function signUpNewUser(
@@ -88,14 +90,6 @@ export async function createUserData(userId) {
   return { data, error };
 }
 
-export async function createUserStats(userId) {
-  return await publicSupabaseClient
-    .from('user_stats')
-    .insert({ user_id: userId, user_level: 0 })
-    .select('user_level')
-    .single();
-}
-
 export async function getUserStats(userId) {
   const { data, error } = await publicSupabaseClient
     .from('user_stats')
@@ -103,6 +97,14 @@ export async function getUserStats(userId) {
     .eq('user_id', userId)
     .single();
   return { data, error };
+}
+
+export async function createUserStats(userId) {
+  return await publicSupabaseClient
+    .from('user_stats')
+    .insert({ user_id: userId, user_level: 0 })
+    .select('user_level')
+    .single();
 }
 
 export async function getFilterOptions(table) {
@@ -129,4 +131,47 @@ export async function getFilterOptions(table) {
   }
 
   return { data, error };
+}
+
+export async function getCreators(filters) {
+  const { data, error } = await publicSupabaseClient
+    .from('smsk_creators')
+    .select(
+      `*, 
+    smsk_creator_categories!inner(
+      category_id,
+      smsk_categories(name)
+    ),
+    smsk_creator_styles(style_id, smsk_styles(name)),
+    smsk_creator_materials(material_id, smsk_materials(name)),
+    smsk_creator_features(
+      feature_id,
+      smsk_features(name)
+      ),
+    smsk_creator_images(img_url, alt_text)`
+    )
+    .eq(
+      'smsk_creator_categories.category_id',
+      filters.category
+    );
+  console.log('NOT flattened data:', data);
+  const flatData = flattebedCreatiorData(data);
+
+  return { data: flatData, error };
+}
+
+export async function getProfileData(UserId) {
+  const { data, error } = await publicSupabaseClient
+    .from('users')
+    .select(
+      `*,
+    user_stats(user_level)`
+    )
+    .eq('user_id', UserId)
+    .single();
+  if (error) {
+    console.error('Error fetching profile data:', error);
+    return { error };
+  }
+  return { data, error: null };
 }
