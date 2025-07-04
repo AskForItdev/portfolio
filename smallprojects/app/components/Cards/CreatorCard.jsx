@@ -93,8 +93,10 @@ export default function CreatorCard({
             className="flex flex-col gap-2 w-[50%]"
           >
             <div>
-              <p className="text-sm">{firstName}</p>
-              <p className="text-sm">{lastName}</p>
+              <div className="flex gap-1">
+                <p className="text-sm">{firstName}</p>
+                <p className="text-sm">{lastName}</p>
+              </div>
               <p className="text-sm">{city}</p>
               <p className="text-sm">{mainCategory}</p>
             </div>

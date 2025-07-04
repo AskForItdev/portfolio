@@ -177,138 +177,162 @@ export default function Smaskaligt() {
             </div>
           </div>
           <div className="flex flex-col items-center w-full">
-            <div className="overflow-y-auto flex justify-center bg-[var(--background2)] h-max w-full">
+            <div className="overflow-y-auto flex justify-center bg-[var(--background2)] min-h-screen w-full">
               <div className="flex gap-6 justify-evenly m-6 pt-2 h-auto w-[80rem]">
                 <div className="flex-1 px-2">
-                  {searchFilters.category && (
-                    <div className="creatorCardContainer flex flex-wrap gap-[.75rem]">
-                      {filteredCreators.map(
-                        (creator, index) => (
-                          <CreatorCard
-                            key={index}
-                            name={creator.displayName}
-                            firstName={creator.firstName}
-                            lastName={creator.lastName}
-                            city={creator.city}
-                            mainCategory={
-                              creator.mainCategory
-                            }
-                            imageUrls={creator.imageUrls}
-                            styles={creator.styles.join(
-                              ', '
-                            )}
-                            features={creator.features}
-                          />
-                        )
-                      )}
-                    </div>
-                  )}
-                </div>
-                <div className="p-2 w-full rounded-2xl flex flex-col basis-[23%] bg-[var(--card)]">
-                  <div className="p-4 flex flex-col gap-4 text-sm">
-                    <h2 className="font-bold text-base">
-                      FILTER
-                    </h2>
-
-                    {/* Dropdowns */}
-
-                    {dropDownCategory && (
-                      <select
-                        className="bg-[var(--background2)] p-2 rounded-full"
-                        name=""
-                        defaultValue=""
-                        id=""
-                      >
-                        <option value="" disabled hidden>
-                          KATEGORI
-                        </option>
-                        {dropDownCategory.map((item) => (
-                          <option
-                            key={item.id}
-                            value={item.name}
-                          >
-                            {item.name}
-                          </option>
-                        ))}
-                      </select>
-                    )}
-                    {dropDownStyle && (
-                      <select
-                        className="bg-[var(--background2)] p-2 rounded-full"
-                        name=""
-                        defaultValue=""
-                        id=""
-                      >
-                        <option value="" disabled hidden>
-                          STIL
-                        </option>
-                        {dropDownStyle.map((item) => (
-                          <option
-                            key={item.id}
-                            value={item.name}
-                          >
-                            {item.name}
-                          </option>
-                        ))}
-                      </select>
-                    )}
-                    {dropDownMaterials && (
-                      <select
-                        className="bg-[var(--background2)] p-2 rounded-full"
-                        name=""
-                        defaultValue=""
-                        id=""
-                      >
-                        <option value="" disabled hidden>
-                          MATERIAL
-                        </option>
-                        {dropDownMaterials.map((item) => (
-                          <option
-                            key={item.id}
-                            value={item.name}
-                          >
-                            {item.name}
-                          </option>
-                        ))}
-                      </select>
-                    )}
-
-                    {/* Prisintervall */}
-                    <div className="flex flex-col">
-                      <label className="font-semibold">
-                        PRISINTERVALL
-                      </label>
-                      <input
-                        type="range"
-                        min="10"
-                        max="5000"
-                        className="w-full mt-2"
-                      />
-                      <div className="flex justify-between text-xs mt-1">
-                        <span>10:-</span>
-                        <span>5000:-</span>
-                      </div>
-                      {/* Checkboxar */}
-                      <div className="flex flex-col gap-1 mt-4">
-                        <label className="font-semibold mb-1">
-                          ERBJUDER
-                        </label>
-
-                        {checksFeatures.map(
-                          (label, index) => (
-                            <label
+                  {searchFilters.category &&
+                    filteredCreators.length > 0 && (
+                      <div className="creatorCardContainer flex flex-wrap gap-[.75rem]">
+                        {filteredCreators.map(
+                          (creator, index) => (
+                            <CreatorCard
                               key={index}
-                              className="flex items-center gap-2"
-                            >
-                              <input type="checkbox" />
-                              {label.name}
-                            </label>
+                              name={creator.displayName}
+                              firstName={creator.firstName}
+                              lastName={creator.lastName}
+                              city={creator.city}
+                              mainCategory={
+                                creator.mainCategory
+                              }
+                              imageUrls={creator.imageUrls}
+                              styles={creator.styles.join(
+                                ', '
+                              )}
+                              features={creator.features}
+                            />
                           )
                         )}
                       </div>
-                    </div>
-                  </div>
+                    )}
                 </div>
+                {searchFilters.category &&
+                  filteredCreators.length > 0 && (
+                    <div className="p-2 w-full rounded-2xl flex flex-col basis-[23%] bg-[var(--card)]">
+                      <div className="p-4 flex flex-col gap-4 text-sm">
+                        <h2 className="font-bold text-base">
+                          FILTER
+                        </h2>
+
+                        {/* Dropdowns */}
+
+                        {dropDownCategory && (
+                          <select
+                            className="bg-[var(--background2)] p-2 rounded-full"
+                            name=""
+                            defaultValue=""
+                            id=""
+                          >
+                            <option
+                              value=""
+                              disabled
+                              hidden
+                            >
+                              KATEGORI
+                            </option>
+                            {dropDownCategory.map(
+                              (item) => (
+                                <option
+                                  key={item.id}
+                                  value={item.name}
+                                >
+                                  {item.name}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        )}
+                        {dropDownStyle && (
+                          <select
+                            className="bg-[var(--background2)] p-2 rounded-full"
+                            name=""
+                            defaultValue=""
+                            id=""
+                          >
+                            <option
+                              value=""
+                              disabled
+                              hidden
+                            >
+                              STIL
+                            </option>
+                            {dropDownStyle.map((item) => (
+                              <option
+                                key={item.id}
+                                value={item.name}
+                              >
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                        {dropDownMaterials && (
+                          <select
+                            className="bg-[var(--background2)] p-2 rounded-full"
+                            name=""
+                            defaultValue=""
+                            id=""
+                          >
+                            <option
+                              value=""
+                              disabled
+                              hidden
+                            >
+                              MATERIAL
+                            </option>
+                            {dropDownMaterials.map(
+                              (item) => (
+                                <option
+                                  key={item.id}
+                                  value={item.name}
+                                >
+                                  {item.name}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        )}
+
+                        {/* Prisintervall */}
+                        <div className="flex flex-col">
+                          <label className="font-semibold">
+                            PRISINTERVALL
+                          </label>
+                          <input
+                            type="range"
+                            min="10"
+                            max="5000"
+                            className="w-full mt-2"
+                          />
+                          <div className="flex justify-between text-xs mt-1">
+                            <span>10:-</span>
+                            <span>5000:-</span>
+                          </div>
+                          {/* Checkboxar */}
+                          <div className="flex flex-col gap-1 mt-4">
+                            <label className="font-semibold mb-1">
+                              ERBJUDER
+                            </label>
+
+                            {checksFeatures.map(
+                              (label, index) => (
+                                <label
+                                  key={index}
+                                  className="flex items-center gap-2"
+                                >
+                                  <input type="checkbox" />
+                                  {label.name}
+                                </label>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                {searchFilters.category &&
+                  filteredCreators.length === 0 && (
+                    <div>test</div>
+                  )}
               </div>
             </div>
           </div>

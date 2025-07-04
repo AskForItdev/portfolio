@@ -142,13 +142,13 @@ export async function getCreators(filters) {
       category_id,
       smsk_categories(name)
     ),
-    smsk_creator_styles(style_id),
-    smsk_creator_materials(material_id),
-    smsk_creator_features!inner(
+    smsk_creator_styles(style_id, smsk_styles(name)),
+    smsk_creator_materials(material_id, smsk_materials(name)),
+    smsk_creator_features(
       feature_id,
       smsk_features(name)
-      )
-    `
+      ),
+    smsk_creator_images(img_url, alt_text)`
     )
     .eq(
       'smsk_creator_categories.category_id',
