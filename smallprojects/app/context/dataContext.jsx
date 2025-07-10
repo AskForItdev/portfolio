@@ -8,26 +8,26 @@ export const DataContextProvider = ({ children }) => {
   const projectData = [
     {
       title: 'Dennis Idea',
-      img: '/images/2.png',
+      img: '/images/casino2.png',
       description: 'This is a brief description.',
       link: 'projects/dennisidea',
     },
     {
       title: 'Real Net Worth',
-      img: '/images/amazingbox.jpg',
+      img: '/images/Networth.png',
       description: 'This project does something else.',
       link: 'projects/realnetworth',
     },
     {
       title: 'Sälja ved',
-      img: '/images/planet.png',
+      img: '/images/logs.png',
       description:
         'Detta projektet skall se ut som en tjänst för skogsägare att sälja överkott av ved. Tanken är att användare ska kunna lista olika kategoriera och volymer.',
       link: 'projects/timer',
     },
     {
       title: 'Home Finances',
-      img: '/images/spreadCubes.png',
+      img: '/images/home finance.png',
       description: 'This is fourth project.',
       link: 'projects/homefinance',
     },
@@ -36,6 +36,12 @@ export const DataContextProvider = ({ children }) => {
       img: '/images/skaperian/småskaligt.png',
       description: 'Project for a creator-databank!',
       link: 'projects/smaskaligt',
+    },
+    {
+      title: 'Chat',
+      img: '/images/chatImg.png',
+      description: 'This is my chat project.',
+      link: 'projects/chat',
     },
   ];
 
