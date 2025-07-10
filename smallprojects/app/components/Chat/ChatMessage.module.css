@@ -1,0 +1,209 @@
+.message {
+  border-radius: var(--bigradius);
+  padding: 0.5rem;
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.message pre {
+  display: flex;
+  font-family: inherit;
+  max-width: 100%;
+  white-space: pre-wrap;
+}
+
+.message * {
+  pointer-events: none;
+}
+
+.message:hover {
+  cursor: pointer;
+}
+
+.message:active {
+  filter: brightness(0.9);
+}
+
+.message img {
+  max-width: 100%;
+  max-height: 60vh;
+  border-radius: var(--radius);
+}
+
+.messageSent {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: 2rem;
+  background-color: var(--tabOn);
+}
+
+.messageContent {
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.messageTimestamp {
+  font-size: 0.625rem;
+  opacity: 0.5;
+  padding: 0 0.5rem;
+}
+
+.messageSent .messageTimestamp {
+  text-align: right;
+}
+
+.messageReceived {
+  width: fit-content;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  background-color: var(--light-grey-alternative);
+}
+
+.iconBubble {
+  position: absolute;
+  right: -20px;
+  top: 0;
+  z-index: -1;
+}
+
+.iconBubbleColor {
+  fill: var(--tabOn);
+}
+
+.messageReceived .iconBubbleColor {
+  fill: var(--light-grey-alternative);
+}
+
+.messageReceived .iconBubble {
+  transform: skewX(100%) scaleX(-1);
+  right: auto;
+  left: -20px;
+  top: 0;
+}
+
+.messageDeleted {
+  font-style: italic;
+  font-size: 0.85rem;
+  opacity: 0.5;
+}
+.imageModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.modalOverlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modalContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fullImage {
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+
+.audioContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 200px;
+}
+
+.audioPlayer {
+  flex: 1;
+  height: 2rem;
+  border-radius: 1rem;
+  background: var(--light-grey-alternative);
+}
+
+.audioDuration {
+  font-size: 0.875rem;
+  color: var(--light-grey);
+  white-space: nowrap;
+}
+
+.editedContainerSent {
+  position: absolute;
+  background-color: var(--tabOn);
+  top: -0.5rem;
+  border-radius: var(--radius);
+}
+
+.editedContainerReceived {
+  position: absolute;
+  background-color: var(--light-grey-alternative);
+  top: -0.5rem;
+  border-radius: var(--radius);
+}
+
+.editedMessage {
+  font-style: italic;
+  font-size: 0.65rem;
+  opacity: 0.5;
+  padding : 0.1rem 0.4rem;
+}
+
+
+
+.messageStatus {
+  display: flex;
+  font-size: 0.625rem;
+  /* color: var(--light-grey); */
+  margin-top: 0.25rem;
+  /* width: 100%; */
+}
+.messageTimestamp {
+  position: relative;    
+  top: 0.34rem;
+  align-items: start;
+  flex-grow: 1;
+  font-size: 0.625rem;
+  padding: 0 0.5rem;
+}
+.checkContainer {
+  display: flex;
+  /* background-color: var(--light-grey-alternative); */
+  border-radius: var(--radius);
+  padding: 0 0.45rem 0 0.45rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  gap: 0.25rem;
+}
+
+.checkContainerHidden {
+  display: none;
+}
+.messageDelivered {
+  position: relative;
+  top: 0.34rem;
+  left: 0.28rem;
+  color: var(--checkmark);
+}
+.messageRead {
+  position: relative;
+  top: 0.34rem;
+  left: 0.28rem;
+  color: var(--checkmark);
+}

@@ -15,7 +15,7 @@ export default function flattenCreatorData(data) {
     features: c.smsk_creator_features.map(
       (f) => f.smsk_features.name
     ),
-    imageUrls: c.imageUrls,
+    imageUrls: c.smsk_creator_images.map((i) => i.img_url),
   }));
   return flatData;
 }
