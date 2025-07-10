@@ -9,7 +9,7 @@ const publicSupabaseClient = createClient(
   publicSupabaseKey
 );
 
-import flattebedCreatiorData from '@/app/projects/smaskaligt/functions';
+import flattenedCreatiorData from '@/app/projects/smaskaligt/functions';
 
 export default publicSupabaseClient;
 
@@ -55,6 +55,46 @@ export async function signInWithEmail(email, password) {
     });
 
   return { data, error };
+}
+
+export async function getAllUsers(authId) {
+  const { data, error } = await publicSupabaseClient
+    .from('users')
+    .select(`user_id, user_name, profile_image`)
+    .neq('user_id', authId);
+  if (error) return { error: error.message };
+  return { data };
+}
+
+export async function userNames(my_id, buddy_id) {
+  if (my_id && !buddy_id) {
+    const { data, error } = await publicSupabaseClient
+      .from('users')
+      .select('user_name, user_id')
+      .eq('user_id', my_id);
+    if (error) return { error: error.message };
+
+    console.log('Single name fetch :', data);
+    return { data };
+  }
+
+  const { data, error } = await publicSupabaseClient
+    .from('users')
+    .select('user_name, user_id')
+    .in('user_id', [my_id, buddy_id]);
+  if (error) return { error: error.message };
+
+  console.log('Double user name fetch:', data);
+  return { data };
+}
+
+export async function userOnline(my_id, state) {
+  const { data, error } = await publicSupabaseClient
+    .from('users')
+    .update({ online: state })
+    .eq('user_id', my_id);
+  if (error) return { error: error.message };
+  return { data };
 }
 
 export async function getUserData(userId) {
@@ -155,7 +195,7 @@ export async function getCreators(filters) {
       filters.category
     );
   console.log('NOT flattened data:', data);
-  const flatData = flattebedCreatiorData(data);
+  const flatData = flattenedCreatiorData(data);
 
   return { data: flatData, error };
 }
