@@ -73,5 +73,4 @@ function ProfileThumb({
   );
 }
 
-// Memoize the ProfileThumb component
-export default React.memo(ProfileThumb); // So the component doesn't re-render if the props don't change
+export default React.memo(ProfileThumb);
