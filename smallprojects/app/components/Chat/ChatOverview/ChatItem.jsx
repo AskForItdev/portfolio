@@ -2,7 +2,7 @@
 
 import { getMessagePreview } from '@/app/components/Chat/chatFunctions/chatFunctions.js';
 import { formatTimestamp } from '@/app/components/Chat/chatFunctions/formatFunctions.js';
-import ProfileThumb from '@/app/components/chat/Profile/ProfileThumb';
+import ProfileThumb from '@/app/components/Chat/Profile/ProfileThumb';
 
 import styles from './ChatItem.module.css';
 
