@@ -1,19 +1,3 @@
-/*  ProfileThumb props:
-   
-    imageUrl: URL to the image to be displayed
-    size: Size of the image
-    --------------------------------------
-      small: 42x42px
-      medium: 62x62px
-      large: 100x100px
-    --------------------------------------
-    alt: Alternative text for the image
-    link: URL to redirect to when the image is clicked
-    shadow: true/false to show a shadow around the image
-    sound: true/false if a sound should play when the image is clicked and hovered
-    online: true/false if the user is online
-    disabled: true/false to show it grayed out or not
-*/
 import Link from 'next/link';
 import React from 'react';
 
@@ -34,7 +18,7 @@ function ProfileThumb({
       Math.floor(Math.random() * 101) + 100;
     const randomSizeHeight =
       Math.floor(Math.random() * 101) + 100;
-    // Set default fallback image here
+
     src = `https://picsum.photos/${randomSizeWidth}/${randomSizeHeight}`;
   }
 
@@ -44,18 +28,16 @@ function ProfileThumb({
 
   const handleClick = (e) => {
     if (typeof link === 'function') {
-      e.preventDefault(); // Prevent default if it's a function
+      e.preventDefault();
 
-      link(); // Execute the function
+      link();
     }
   };
 
-  // MARK: Markup
   return (
     <>
       {link ? (
         typeof link === 'string' ? (
-          // Render as an anchor tag or Next.js Link for external/internal links
           <Link href={link} className={profileThumbClass}>
             <div className={styles.profileImage}>
               {online && (
@@ -65,7 +47,6 @@ function ProfileThumb({
             </div>
           </Link>
         ) : (
-          // Render as a div with an onClick handler for functions
           <div
             className={profileThumbClass}
             onClick={handleClick}
@@ -79,7 +60,6 @@ function ProfileThumb({
           </div>
         )
       ) : (
-        // Render without a link
         <div className={profileThumbClass}>
           <div className={styles.profileImage}>
             {online && (
